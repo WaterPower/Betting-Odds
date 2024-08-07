@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Website</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Do sports betting odds accurately reflect the theoretical probability of winning?</h1>
+    </header>
+    <main>
+        <div class="background">
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Introduction</h2>
+                        <p>In sports betting, you can bet on which team you think will win. If you bet on the weaker team, you can win more money, but it's less likely that they will win. If you bet on the stronger team, you have a better chance of winning, but you'll win less money.</p>
+                        <p>I want to find out if these odds are accurate by looking at a lot of data.</p>
+                        <p>Soccer can be tricky because games can end in a win, a draw, or a loss. So, I will use basketball for my study since there are only wins and losses.</p>
+                    </div>
+                    <div class="table-content">
+                        <div class="containerBet1">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Betting odds in a soccer game</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Spain</th>
+                                        <th>Draw</th>
+                                        <th>Japan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1.534</td>
+                                        <td>4.130</td>
+                                        <td>5.530</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="tablor_description">If we take the example of this soccer match, as Spain is stronger than Japan, everybody thinks that they are going to win, so the betting odds are strongly in their favor.</p>
+                            <div class="containerBet2">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Team</th>
+                                            <th>Total Points Scored</th>
+                                            <th>ML MoneyLine</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Brooklyn</td>
+                                            <td>104</td>
+                                            <td>105</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Milwaukee</td>
+                                            <td>127</td>
+                                            <td>-125</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="tablor_description">I will analyze the ML, which means the moneyline.</p>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Methodology and Data Collection</h2>
+                        <p>In a perfect world, to see if the betting odds are correct, you would simulate the match 100 times to calculate the probability of each team winning. Then, you could compare this probability with the betting odds.</p>
+                        <p>Since we can't do that, I will take all matches with the same betting odds (for example, 40%) and see how many of those teams actually won. This way, I can compare the betting odds with the actual results.</p>
+                        <p>The dataset I will use is from the 2021/2022 NBA season. It is available <a href="https://www.sportsbookreviewsonline.com/scoresoddsarchives/nba-odds-2021-22/">here</a>.</p>
+                        <p>There are 1,230 games played each season, so this will provide a good amount of data to analyze.</p>
+                    </div>
+                    <div class="table-content">
+                        <img src="/images/methodology.PNG" class="methodology graph_img">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Converting Moneyline Odds to Implied Probability</h2>
+                        <p>To convert moneyline odds into implied probability percentages, you can use different formulas for positive and negative moneyline odds.</p>
+                        <p><strong>For Positive Moneyline Odds</strong><br>Implied Probability = (100 / (Moneyline Odds + 100)) x 100</p>
+                        <p><strong>For Negative Moneyline Odds</strong><br>Implied Probability = (|Moneyline Odds| / (|Moneyline Odds| + 100)) x 100</p>
+                        <p><strong>Examples:</strong><br><strong>Positive Moneyline (+105)</strong><br>Implied Probability = (100 / (105 + 100)) x 100 ≈ 48.78%</p>
+                        <p><strong>Negative Moneyline (-125)</strong><br>Implied Probability = (125 / (125 + 100)) x 100 ≈ 55.56%</p>
+                        <p>As you can see, there's a small issue: the probabilities don't add up to 100% (48.78 + 55.56 = 104.34%). This extra percentage is how the gambling company makes money on bets.</p>
+                        <p>To see if these implied probabilities represent the theoretical probabilities, we need to normalize the numbers.</p>
+                        <p>To normalize the data, combine the implied probabilities and then divide each implied probability by this total. For example, 48.78 / (48.78 + 55.56).</p>
+                        <p>These steps can be easily done in Excel, resulting in a table with over 1,200 rows, like the one shown on the right.</p>
+                        <p>The last step is to add whether the team actually won or lost their matchup.</p>
+                    </div>
+                    <div class="table-content">
+                        <table class="highlight-table">
+                            <thead>
+                                <tr>
+                                    <th>Team</th>
+                                    <th>Total Points Scored</th>
+                                    <th>ML MoneyLine</th>
+                                    <th>Implied Probability</th>
+                                    <th>Implied Probability normalized</th>
+                                    <th>Did He Win?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Brooklyn</td>
+                                    <td>104</td>
+                                    <td>105</td>
+                                    <td>48.78%</td>
+                                    <td>47%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Milwaukee</td>
+                                    <td>127</td>
+                                    <td>-125</td>
+                                    <td>55.56%</td>
+                                    <td>53%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>GoldenState</td>
+                                    <td>121</td>
+                                    <td>140</td>
+                                    <td>41.67%</td>
+                                    <td>40%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>LALakers</td>
+                                    <td>114</td>
+                                    <td>-160</td>
+                                    <td>61.54%</td>
+                                    <td>60%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Indiana</td>
+                                    <td>122</td>
+                                    <td>-125</td>
+                                    <td>55.56%</td>
+                                    <td>53%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Charlotte</td>
+                                    <td>123</td>
+                                    <td>105</td>
+                                    <td>48.78%</td>
+                                    <td>47%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>Chicago</td>
+                                    <td>94</td>
+                                    <td>-220</td>
+                                    <td>68.75%</td>
+                                    <td>67%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>Detroit</td>
+                                    <td>88</td>
+                                    <td>190</td>
+                                    <td>34.48%</td>
+                                    <td>33%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Washington</td>
+                                    <td>98</td>
+                                    <td>120</td>
+                                    <td>45.45%</td>
+                                    <td>44%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>Toronto</td>
+                                    <td>83</td>
+                                    <td>-140</td>
+                                    <td>58.33%</td>
+                                    <td>56%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Boston</td>
+                                    <td>134</td>
+                                    <td>120</td>
+                                    <td>45.45%</td>
+                                    <td>44%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>NewYork</td>
+                                    <td>138</td>
+                                    <td>-140</td>
+                                    <td>58.33%</td>
+                                    <td>56%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>Cleveland</td>
+                                    <td>121</td>
+                                    <td>240</td>
+                                    <td>29.41%</td>
+                                    <td>28%</td>
+                                    <td>Lost</td>
+                                </tr>
+                                <tr>
+                                    <td>Memphis</td>
+                                    <td>132</td>
+                                    <td>-280</td>
+                                    <td>73.68%</td>
+                                    <td>72%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>Philadelphia</td>
+                                    <td>117</td>
+                                    <td>-170</td>
+                                    <td>62.96%</td>
+                                    <td>61%</td>
+                                    <td>Won</td>
+                                </tr>
+                                <tr>
+                                    <td>NewOrleans</td>
+                                    <td>97</td>
+                                    <td>150</td>
+                                    <td>40.00%</td>
+                                    <td>39%</td>
+                                    <td>Lost</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Grouping the Data with Python</h2>
+                        <p>From the Excel database, I will use Python to create a dictionary of the data, making it easier to analyze. Each team in a match will be an object, like this: (49, "Lose").</p>
+                        <p>The script and the result can be found here:</p>
+                        <p>The first step to analyze this data is to group all implied probabilities together. To do this, I will use Python and the pandas module, which makes grouping data very easy.</p>
+                        <p>I end up with a CSV file that shows the implied probability of each group, the number of losses, the number of wins, and from this data, I can calculate the actual win probability.</p>
+                        <p>With this final CSV, I can now analyze it to answer the question:</p>
+                        <p><strong>Do sports betting odds accurately reflect the theoretical probability of winning?</strong></p>
+                    </div>
+                    <div class="table-content">
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show Code extraction_excel.py</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+import pandas as pd
+# Load Excel file
+filename = 'matches_data.xlsx'
+sheet_name = 'Sheet1'
+
+# Read Excel sheet into a DataFrame without headers
+df = pd.read_excel(filename, sheet_name=sheet_name, header=None)
+
+Data = []
+
+# Iterate over rows in the DataFrame
+for index, row in df.iterrows():
+    player_id = row[0]   # Accessing the first column (0-based index)
+    result = row[1]      # Accessing the second column (0-based index)
+    Data.append((player_id, result))  # Append tuple (player_id, result) to Data list
+
+# Write the Data list to a Python file
+output_file = 'data.py'
+
+with open(output_file, 'w') as f:
+    f.write('Data = [\n')
+    for player_id, result in Data:
+        f.write(f'    ({player_id}, "{result}"),\n')
+    f.write(']\n')
+
+print(f"Data written to '{output_file}'")
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show Code group_data.py</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+from data import Data
+
+import pandas as pd
+
+# Convert Data to a DataFrame
+df = pd.DataFrame(Data, columns=['Theoretical%', 'Result'])
+
+# Calculate the count of 'Loose' and 'Won' matches for each theoretical percentage
+grouped = df.groupby('Theoretical%')['Result'].value_counts().unstack().fillna(0)
+
+# Calculate the percentage of wins (%OF WIN)
+grouped['%OF WIN'] = grouped['Won'] / (grouped['Loose'] + grouped['Won']) * 100
+
+# Round the number of 'Loose' and 'Won' to integers
+grouped['Loose'] = grouped['Loose'].astype(int)
+grouped['Won'] = grouped['Won'].astype(int)
+
+grouped['%OF WIN'] = grouped['%OF WIN'].round(1)
+
+output_file = 'result_NN.csv'
+grouped.to_csv(output_file)
+
+print(f"Data saved to {output_file}")         
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show the grouped data normalized</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+implied probability | Loose | Won | real win probability (%ofwin)
+7  | 1  | 0  | 0.0
+8  | 4  | 1  | 20.0
+9  | 4  | 0  | 0.0
+10 | 13 | 2  | 13.3
+11 | 9  | 1  | 10.0
+12 | 27 | 2  | 6.9
+13 | 25 | 3  | 10.7
+14 | 19 | 2  | 9.5
+15 | 6  | 3  | 33.3
+16 | 20 | 6  | 23.1
+17 | 19 | 2  | 9.5
+18 | 14 | 3  | 17.6
+19 | 25 | 9  | 26.5
+20 | 11 | 5  | 31.2
+21 | 17 | 3  | 15.0
+22 | 23 | 6  | 20.7
+23 | 15 | 5  | 25.0
+24 | 14 | 6  | 30.0
+25 | 24 | 11 | 31.4
+26 | 23 | 13 | 36.1
+27 | 13 | 4  | 23.5
+28 | 45 | 20 | 30.8
+29 | 15 | 3  | 16.7
+30 | 26 | 17 | 39.5
+31 | 24 | 7  | 22.6
+32 | 27 | 11 | 28.9
+33 | 31 | 18 | 36.7
+34 | 6  | 2  | 25.0
+35 | 44 | 23 | 34.3
+36 | 16 | 10 | 38.5
+37 | 42 | 14 | 25.0
+38 | 12 | 12 | 50.0
+39 | 23 | 8  | 25.8
+40 | 54 | 40 | 42.6
+41 | 15 | 11 | 42.3
+42 | 23 | 16 | 41.0
+43 | 13 | 12 | 48.0
+44 | 32 | 22 | 40.7
+45 | 22 | 14 | 38.9
+46 | 29 | 19 | 39.6
+47 | 24 | 30 | 55.6
+48 | 24 | 13 | 35.1
+49 | 13 | 10 | 43.5
+50 | 18 | 18 | 50.0
+51 | 10 | 13 | 56.5
+52 | 13 | 24 | 64.9
+53 | 30 | 24 | 44.4
+54 | 19 | 29 | 60.4
+55 | 14 | 22 | 61.1
+56 | 22 | 32 | 59.3
+57 | 12 | 13 | 52.0
+58 | 16 | 23 | 59.0
+59 | 11 | 15 | 57.7
+60 | 40 | 54 | 57.4
+61 | 8  | 23 | 74.2
+62 | 12 | 12 | 50.0
+63 | 14 | 42 | 75.0
+64 | 10 | 16 | 61.5
+65 | 23 | 44 | 65.7
+66 | 2  | 6  | 75.0
+67 | 18 | 31 | 63.3
+68 | 11 | 27 | 71.1
+69 | 7  | 24 | 77.4
+70 | 17 | 26 | 60.5
+71 | 3  | 15 | 83.3
+72 | 20 | 45 | 69.2
+73 | 4  | 13 | 76.5
+74 | 13 | 23 | 63.9
+75 | 11 | 24 | 68.6
+76 | 6  | 14 | 70.0
+77 | 5  | 15 | 75.0
+78 | 6  | 23 | 79.3
+79 | 3  | 17 | 85.0
+80 | 5  | 11 | 68.8
+81 | 9  | 25 | 73.5
+82 | 3  | 14 | 82.4
+83 | 2  | 19 | 90.5
+84 | 6  | 20 | 76.9
+85 | 3  | 6  | 66.7
+86 | 2  | 19 | 90.5
+87 | 2  | 13 | 86.7
+88 | 3  | 39 | 92.9
+89 | 1  | 9  | 90.0
+90 | 2  | 13 | 86.7
+91 | 0  | 4  | 100.0
+92 | 1  | 4  | 80.0
+93 | 0  | 1  | 100.0
+
+The list as been style for better readability
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Analyzing and Representing the Data</h2>
+                        <p>I will continue to use Python for this analysis.</p>
+                        <p>First, I will plot the implied probability against the theoretical probability. I will also add a line where x=y. If everything is accurate, the dots should follow this line.</p>
+                        <p>We can see that the line is generally followed, but I expected the points to be much closer to this line, especially for the dots near 50%, as this is where I have the most data.</p>
+                        <p>Here are some observations of the last graph</p>
+                        <p>Number of points inside the 5% margin: 38</p>
+                        <p>Number of points outside the 5% margin: 49</p>
+                    </div>
+                    <div class="table-content">
+                        <img src="/python-img/scatter_plot.png" class="graph_img">
+                        <img src="/python-img/scatter_plot_2.png" class="graph_img">
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show Code scatter_plot2.py</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load data from CSV file
+data = np.genfromtxt('result.csv', delimiter=',', skip_header=1, dtype=float)
+
+# Use built-in math rendering
+plt.rcParams['text.usetex'] = False
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['mathtext.fontset'] = 'cm'
+
+
+# Extract columns
+theoretical_percent = data[:, 0]  # Assuming Theoretical% is the first column
+actual_wins = data[:, 3]          # Assuming %OF WIN is the fourth column
+
+# Scatter plot
+plt.figure(figsize=(10, 6))
+
+# Determine points inside and outside the 5% margin
+inside_margin = (actual_wins >= theoretical_percent - 5) & (actual_wins <= theoretical_percent + 5)
+outside_margin = ~inside_margin
+
+# Plot points
+plt.scatter(theoretical_percent[inside_margin], actual_wins[inside_margin], color='purple', label='Inside 5% Margin')
+plt.scatter(theoretical_percent[outside_margin], actual_wins[outside_margin], color='red', label='Outside 5% Margin')
+
+# Perfect prediction line
+x = np.linspace(min(theoretical_percent), max(theoretical_percent), 100)
+plt.plot(x, x, color='blue', linestyle='-', label='y = x')
+
+# 5% above and below lines
+plt.plot(x, x + 5, color='green', linestyle='--', label='y = x + 5%')
+plt.plot(x, x - 5, color='green', linestyle='--', label='y = x - 5%')
+
+# Plot labels and legend
+plt.xlabel('Theoretical %')
+plt.ylabel('% of Wins')
+plt.title('Scatter Plot with 5% Margin Lines')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Print the number of points inside and outside the margin
+num_inside = np.sum(inside_margin)
+num_outside = np.sum(outside_margin)
+print(f'Number of points inside the 5% margin: {num_inside}')
+print(f'Number of points outside the 5% margin: {num_outside}')
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h2>Statistical Analysis with a T-Test</h2>
+                        <p>The first thing to check is whether we have a normal distribution of these values.</p>
+                        <p>Using Python, we calculate the difference between the implied probability and the real probability. We create a histogram of the results and perform the Shapiro-Wilk Test.</p>
+                        <p>The Shapiro-Wilk Test gives a p-value of 0.73, which is much higher than 0.05. This means we cannot reject the null hypothesis, indicating that the data follows a normal distribution.</p>
+                        <p>Since the data is normal, we can now perform a T-Test. The paired t-test is appropriate here because we are comparing two sets of related measurements: the implied probabilities of winning (based on betting odds) and the actual probabilities of winning (based on real outcomes) for the same events.</p>
+                        <p>In this test, the null hypothesis is that the mean difference between the pairs of values is negligible. The alternative hypothesis is that there is a significant difference between the results.</p>
+                        <p>We found that the paired p-value is 0.99, meaning we cannot reject the null hypothesis. This indicates that there is no significant difference.</p>
+                        <p>With this test, we can confidently say that the normalized sports betting odds accurately reflect the theoretical probability of winning.</p>
+                    </div>
+                    <div class="table-content">
+                        <img src="/python-img/Histogram of difference between Implied probability and Real win probability.png" class="graph_img">
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show Code to anaylse the normality</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import shapiro, normaltest, anderson, probplot
+
+# Load the CSV data
+data = pd.read_csv('result.csv')
+
+# Calculate the difference between 'Theoretical%' and '%OF WIN'
+data['Difference'] = data['Theoretical%'] - data['%OF WIN']
+
+# Perform normality tests
+shapiro_test = shapiro(data['Difference'])
+
+# Print the test results
+print(f"Shapiro-Wilk Test: Statistic={shapiro_test.statistic}, p-value={shapiro_test.pvalue}")
+
+# Visualize the distribution of the differences using a histogram
+plt.figure(figsize=(12, 6))
+sns.histplot(data['Difference'], kde=True)
+plt.title('Histogram of difference between Implied probability and Real win probability')
+plt.xlabel('Difference')
+plt.ylabel('Frequency')
+plt.show()
+                                        
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show Code graph.py</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div class="flex-container">
+                    <div class="text-content">
+                        <h1>What About the Normal Betting Data, the Non-Normalized Data?</h1>
+                        <p>Now let's repeat the analysis with the non-normalized values.</p>
+                        <p>Number of points inside the 5% margin: 46<br>
+                        Number of points outside the 5% margin: 44<br>
+                        Number of points above the y = x line: 37<br>
+                        Number of points below the y = x line: 53</p>
+                        <p>We can see that there are more points losing than winning.</p>
+                        <p>This is normal because the betting companies set things up so that the total percentage is higher than 100%.</p>
+                        <p>This explains why they use complex formats like moneyline or odds. They want to hide the fact that if you add the probabilities, it is above 100%.</p>
+                        <p>Now, I will do the same statistical analysis as with the normalized data.</p>
+                        <p>We see that the data is normalized, so we can perform the paired t-test.</p>
+                        <p>The paired p-value is 0.66, so like before, we cannot reject the null hypothesis. This means there is no significant difference between the betting odds and the real probability of winning.</p>
+                    </div>
+                    <div class="table-content">
+                        <img src="/python-img/scatter_plot_NN.png" class="graph_img">
+                        <img src="/python-img/histogram difference_NN.png" class="graph_img">
+                        <div class="collapsible">
+                            <button class="collapsible-button">Show the grouped data</button>
+                            <div class="content">
+                                <pre>
+                                    <code>
+    implied probability | Loose | Won | real win probability (%ofwin)
+    7  | 1  | 0  | 0.0
+    8  | 4  | 1  | 20.0
+    9  | 4  | 0  | 0.0
+    10 | 10 | 1  | 9.1
+    11 | 12 | 2  | 14.3
+    12 | 13 | 2  | 13.3
+    13 | 26 | 1  | 3.7
+    14 | 13 | 2  | 13.3
+    15 | 19 | 2  | 9.5
+    16 | 6  | 3  | 33.3
+    17 | 20 | 6  | 23.1
+    18 | 19 | 2  | 9.5
+    19 | 14 | 3  | 17.6
+    20 | 25 | 9  | 26.5
+    21 | 13 | 5  | 27.8
+    22 | 15 | 3  | 16.7
+    23 | 23 | 6  | 20.7
+    24 | 15 | 5  | 25.0
+    25 | 14 | 6  | 30.0
+    26 | 24 | 11 | 31.4
+    27 | 23 | 13 | 36.1
+    28 | 13 | 4  | 23.5
+    29 | 45 | 20 | 30.8
+    30 | 15 | 3  | 16.7
+    31 | 26 | 17 | 39.5
+    32 | 24 | 7  | 22.6
+    33 | 27 | 11 | 28.9
+    34 | 31 | 18 | 36.7
+    35 | 6  | 2  | 25.0
+    36 | 44 | 23 | 34.3
+    37 | 16 | 10 | 38.5
+    38 | 42 | 14 | 25.0
+    39 | 12 | 12 | 50.0
+    40 | 23 | 8  | 25.8
+    41 | 30 | 18 | 37.5
+    42 | 24 | 22 | 47.8
+    43 | 38 | 27 | 41.5
+    44 | 13 | 12 | 48.0
+    45 | 32 | 22 | 40.7
+    47 | 22 | 14 | 38.9
+    48 | 29 | 19 | 39.6
+    49 | 25 | 30 | 54.5
+    50 | 23 | 13 | 36.1
+    51 | 13 | 10 | 43.5
+    52 | 18 | 18 | 50.0
+    53 | 10 | 14 | 58.3
+    55 | 13 | 23 | 63.9
+    56 | 30 | 24 | 44.4
+    57 | 33 | 51 | 60.7
+    58 | 22 | 32 | 59.3
+    59 | 12 | 13 | 52.0
+    60 | 16 | 23 | 59.0
+    61 | 11 | 15 | 57.7
+    62 | 40 | 54 | 57.4
+    63 | 8  | 23 | 74.2
+    64 | 20 | 32 | 61.5
+    65 | 6  | 22 | 78.6
+    66 | 10 | 16 | 61.5
+    67 | 10 | 21 | 67.7
+    68 | 15 | 29 | 65.9
+    69 | 12 | 21 | 63.6
+    70 | 6  | 10 | 62.5
+    71 | 18 | 45 | 71.4
+    72 | 10 | 22 | 68.8
+    73 | 10 | 25 | 71.4
+    74 | 10 | 29 | 74.4
+    75 | 10 | 16 | 61.5
+    76 | 8  | 23 | 74.2
+    77 | 14 | 24 | 63.2
+    78 | 12 | 27 | 69.2
+    79 | 4  | 13 | 76.5
+    80 | 7  | 24 | 77.4
+    81 | 3  | 18 | 85.7
+    82 | 5  | 10 | 66.7
+    83 | 9  | 25 | 73.5
+    84 | 0  | 1  | 100.0
+    85 | 3  | 14 | 82.4
+    86 | 2  | 19 | 90.5
+    87 | 3  | 9  | 75.0
+    88 | 6  | 17 | 73.9
+    89 | 2  | 19 | 90.5
+    90 | 2  | 13 | 86.7
+    91 | 1  | 12 | 92.3
+    92 | 2  | 27 | 93.1
+    93 | 1  | 9  | 90.0
+    94 | 2  | 9  | 81.8
+    95 | 0  | 8  | 100.0
+    96 | 1  | 3  | 75.0
+    97 | 0  | 1  | 100.0
+    98 | 0  | 1  | 100.0                         
+                                    </code>
+                                </pre>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </section>
+            <section class="flex-container">
+                <div class="text-content">
+                    <h2>Conclusion</h2>
+                    <p>It looks like the normalized implied probabilities are accurate.</p>
+                    <p>While it might not be a perfect match, it is very close. Therefore, the idea of skill in this type of sports betting can be quite questionable.</p>
+                </div>
+            </section>
+            <section class="flex-container">
+                <div class="text-content">
+                    <h2>Opening</h2>
+                    <p>It will be interesting to see the results for other sports.</p>
+                    <p>What I find even more intriguing is examining the variability in other types of betting. Maybe the skill involved in different types of bets is higher?</p>
+                    <p>For example, predicting the number of goals a player will score might be harder, making it potentially a better test for skill.</p>
+                    <p>In such cases, it might turn out that predicting becomes so challenging that it becomes more like a coin toss.</p>
+                    <p>It would also be interesting to look at other NBA seasons to see if the same patterns emerge. Combining data from five seasons might show if the dots on the graph get closer to the line, which would make sense.</p>
+                </div>
+            </section>
+            <section>
+                <h2>Our Services</h2>
+                <p>This is the services section of the website.</p>
+            </section>
+            <section>
+                <h2>Contact Us</h2>
+                <p>This is the contact section of the website.</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+    
+<script src="script.js"></script>
+</body>
+</html>

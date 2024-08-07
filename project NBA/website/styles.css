@@ -1,0 +1,273 @@
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+.background {
+    background-repeat: repeat;
+    background-size: cover;
+    background: 
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255,0.7)), 
+    url('/images/data-analyst-pattern-background.jpg');
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Flexbox Layout */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.text-content {
+    flex: 1;
+}
+
+.table-content {
+    flex: 1;
+}
+/* Base Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+}
+
+.background {
+    background-repeat: repeat;
+    background-size: cover;
+    background: 
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255,0.7)), 
+    url('/images/data-analyst-pattern-background.jpg');
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Flexbox Layout */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.text-content {
+    flex: 1;
+    background-color: aliceblue;
+}
+
+.table-content {
+    flex: 1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .flex-container {
+        flex-direction: column;
+    }
+
+    header nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+
+    footer {
+        position: relative;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    background-color: #003366;
+    color: #ffffff;
+}
+
+th, td {
+    border: 1px solid #011325;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #00509e;
+}
+
+tr:nth-child(even) {
+    background-color: #004080;
+}
+
+tr:hover {
+    background-color: #001f3f;
+}
+
+.tablor_description {
+    color: #001f3f;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Highlight every two rows to represent a match */
+.highlight-table tbody tr:nth-child(4n-3), 
+.highlight-table tbody tr:nth-child(4n-2) {
+    background-color: #004080;
+}
+.highlight-table tbody tr:nth-child(4n-1), 
+.highlight-table tbody tr:nth-child(4n) {
+   background-color: #003366;
+}
+
+
+
+
+
+.methodology {
+    height: 90%;
+    width: 90%;
+    border: 3px solid #011325;
+    border-radius: 10%;
+}
+
+
+
+.collapsible {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.collapsible-button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.collapsible-button:hover {
+    background-color: #45a049;
+}
+
+.collapsible-button.active {
+    background-color: #555;
+}
+
+.content {
+    max-height: 0px;
+    overflow-y: auto;  /* Enable vertical scrolling */
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.content pre {
+    margin: 0;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+}
+
+.content code {
+    display: block;
+    white-space: pre-wrap;
+}
+
+.graph_img {
+    width: 90%;
+    cursor: pointer;
+
+}
+
+/* Fullscreen Image Style */
+.fullscreen {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); /* Dark background */
+    object-fit: contain; /* Ensure the image maintains aspect ratio */
+    cursor: pointer;
+}
+
